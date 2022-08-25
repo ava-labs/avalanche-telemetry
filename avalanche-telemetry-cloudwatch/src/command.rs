@@ -5,7 +5,7 @@ use std::{
 
 use aws_manager::{self, cloudwatch, ec2};
 use aws_sdk_cloudwatch::{
-    model::{Dimension, MetricDatum, StandardUnit},
+    model::{MetricDatum, StandardUnit},
     types::DateTime as SmithyDateTime,
 };
 use chrono::Utc;
@@ -196,14 +196,8 @@ pub async fn execute(opts: Flags) -> io::Result<()> {
                 MetricDatum::builder()
                     .metric_name(mv.name_with_labels())
                     .value(mv.value.to_f64())
-                    .unit(StandardUnit::Count)
+                    .unit(StandardUnit::None)
                     .timestamp(ts)
-                    .dimensions(
-                        Dimension::builder()
-                            .name("avalanche-telemetry-cloudwatch")
-                            .value("raw")
-                            .build(),
-                    )
                     .build(),
             )
         }
