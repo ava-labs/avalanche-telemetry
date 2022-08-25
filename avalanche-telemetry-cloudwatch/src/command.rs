@@ -13,7 +13,7 @@ use path_clean::PathClean;
 use tokio::time::{sleep, Duration};
 use walkdir::WalkDir;
 
-pub const NAME: &str = "aws-volume-provisioner";
+pub const NAME: &str = "avalanche-telemetry-cloudwatch";
 
 pub fn new() -> Command<'static> {
     Command::new(NAME)
@@ -31,10 +31,10 @@ Requires IAM instance role of: ec2:DescribeVolumes, ec2:CreateVolume, and ec2:At
 
 e.g.,
 
-$ aws-volume-provisioner \
+$ avalanche-telemetry-cloudwatch \
 --log-level=info \
 --initial-wait-random-seconds=70 \
---kind-tag=aws-volume-provisioner \
+--kind-tag=avalanche-telemetry-cloudwatch \
 --id-tag=TEST-ID \
 --volume-type=gp3 \
 --volume-size=400 \
@@ -174,7 +174,7 @@ pub async fn execute(opts: Flags) -> io::Result<()> {
     env_logger::init_from_env(
         env_logger::Env::default().filter_or(env_logger::DEFAULT_FILTER_ENV, opts.log_level),
     );
-    log::info!("starting 'aws-volume-provisioner'");
+    log::info!("starting 'avalanche-telemetry-cloudwatch'");
 
     let shared_config = aws_manager::load_config(None).await?;
     let ec2_manager = ec2::Manager::new(&shared_config);

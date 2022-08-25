@@ -2,7 +2,7 @@ pub mod command;
 
 use std::io;
 
-pub const APP_NAME: &str = "aws-volume-provisioner";
+pub const APP_NAME: &str = "avalanche-telemetry-cloudwatch";
 
 #[tokio::main]
 async fn main() -> io::Result<()> {

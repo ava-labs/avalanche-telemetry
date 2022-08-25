@@ -1,13 +1,13 @@
 [package]
-name = "aws-volume-provisioner"
-version = "0.0.7"
+name = "avalanche-telemetry-cloudwatch"
+version = "0.0.0"
 edition = "2021"
 rust-version = "1.63"
 readme = "README.md"
 license = "Apache-2.0"
 
 [[bin]]
-name = "aws-volume-provisioner"
+name = "avalanche-telemetry-cloudwatch"
 path = "src/main.rs"
 
 [dependencies]

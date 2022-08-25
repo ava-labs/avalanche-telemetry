@@ -148,7 +148,7 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: build
-          args: --release --bin aws-volume-mounter --bin aws-volume-provisioner --target ${{ matrix.job.target }}
+          args: --release --bin avalanche-telemetry-cloudwatch --target ${{ matrix.job.target }}
 
       - name: Compress binaries
         id: release_artifacts
@@ -159,29 +159,18 @@ jobs:
         run: |
           if [ "$PLATFORM_NAME" == "linux" ]; then
 
-            ./target/${TARGET}/release/aws-volume-mounter --help
-            cp ./target/${TARGET}/release/aws-volume-mounter aws-volume-mounter.${TARGET}
-            echo "::set-output name=file_name_aws_volume_mounter::aws-volume-mounter.${TARGET}"
-            tar -czvf aws-volume-mounter_${TARGET}.tar.gz -C ./target/${TARGET}/release aws-volume-mounter
-            echo "::set-output name=file_name_aws_volume_mounter_tar_gz::aws-volume-mounter_${TARGET}.tar.gz"
-
-            ./target/${TARGET}/release/aws-volume-provisioner --help
-            cp ./target/${TARGET}/release/aws-volume-provisioner aws-volume-provisioner.${TARGET}
-            echo "::set-output name=file_name_aws_volume_provisioner::aws-volume-provisioner.${TARGET}"
-            tar -czvf aws-volume-provisioner_${TARGET}.tar.gz -C ./target/${TARGET}/release aws-volume-provisioner
-            echo "::set-output name=file_name_aws_volume_provisioner_tar_gz::aws-volume-provisioner_${TARGET}.tar.gz"
+            ./target/${TARGET}/release/avalanche-telemetry-cloudwatch --help
+            cp ./target/${TARGET}/release/avalanche-telemetry-cloudwatch avalanche-telemetry-cloudwatch.${TARGET}
+            echo "::set-output name=file_name_avalanche_telemetry_cloudwatch::avalanche-telemetry-cloudwatch.${TARGET}"
+            tar -czvf avalanche-telemetry-cloudwatch_${TARGET}.tar.gz -C ./target/${TARGET}/release avalanche-telemetry-cloudwatch
+            echo "::set-output name=file_name_avalanche_telemetry_cloudwatch_tar_gz::avalanche-telemetry-cloudwatch_${TARGET}.tar.gz"
 
           elif [ "$PLATFORM_NAME" == "darwin" ]; then
 
-            cp ./target/${TARGET}/release/aws-volume-mounter aws-volume-mounter.${TARGET}
-            echo "::set-output name=file_name_aws_volume_mounter::aws-volume-mounter.${TARGET}"
-            gtar -czvf aws-volume-mounter_${TARGET}.tar.gz -C ./target/${TARGET}/release aws-volume-mounter
-            echo "::set-output name=file_name_aws_volume_mounter_tar_gz::aws-volume-mounter_${TARGET}.tar.gz"
-
-            cp ./target/${TARGET}/release/aws-volume-provisioner aws-volume-provisioner.${TARGET}
-            echo "::set-output name=file_name_aws_volume_provisioner::aws-volume-provisioner.${TARGET}"
-            gtar -czvf aws-volume-provisioner_${TARGET}.tar.gz -C ./target/${TARGET}/release aws-volume-provisioner
-            echo "::set-output name=file_name_aws_volume_provisioner_tar_gz::aws-volume-provisioner_${TARGET}.tar.gz"
+            cp ./target/${TARGET}/release/avalanche-telemetry-cloudwatch avalanche-telemetry-cloudwatch.${TARGET}
+            echo "::set-output name=file_name_avalanche_telemetry_cloudwatch::avalanche-telemetry-cloudwatch.${TARGET}"
+            gtar -czvf avalanche-telemetry-cloudwatch_${TARGET}.tar.gz -C ./target/${TARGET}/release avalanche-telemetry-cloudwatch
+            echo "::set-output name=file_name_avalanche_telemetry_cloudwatch_tar_gz::avalanche-telemetry-cloudwatch_${TARGET}.tar.gz"
 
           else
 
@@ -201,10 +190,8 @@ jobs:
           prerelease: true
           body: Latest builds from the last commit.
           files: |
-            ${{ steps.release_artifacts.outputs.file_name_aws_volume_mounter }}
-            ${{ steps.release_artifacts.outputs.file_name_aws_volume_mounter_tar_gz }}
-            ${{ steps.release_artifacts.outputs.file_name_aws_volume_provisioner }}
-            ${{ steps.release_artifacts.outputs.file_name_aws_volume_provisioner_tar_gz }}
+            ${{ steps.release_artifacts.outputs.file_name_avalanche_telemetry_cloudwatch }}
+            ${{ steps.release_artifacts.outputs.file_name_avalanche_telemetry_cloudwatch_tar_gz }}
 
       # release only for tags
       # https://github.com/softprops/action-gh-release
@@ -219,7 +206,5 @@ jobs:
           prerelease: true
           body: Release builds for ${{ github.ref_name }}.
           files: |
-            ${{ steps.release_artifacts.outputs.file_name_aws_volume_mounter }}
-            ${{ steps.release_artifacts.outputs.file_name_aws_volume_mounter_tar_gz }}
-            ${{ steps.release_artifacts.outputs.file_name_aws_volume_provisioner }}
-            ${{ steps.release_artifacts.outputs.file_name_aws_volume_provisioner_tar_gz }}
+            ${{ steps.release_artifacts.outputs.file_name_avalanche_telemetry_cloudwatch }}
+            ${{ steps.release_artifacts.outputs.file_name_avalanche_telemetry_cloudwatch_tar_gz }}

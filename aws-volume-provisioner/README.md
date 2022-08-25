@@ -1,2 +1,0 @@
-
-AWS EBS volume provisioner.
