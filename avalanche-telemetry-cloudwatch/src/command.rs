@@ -21,6 +21,8 @@ pub fn new() -> Command<'static> {
         .long_about(
             "
 
+Scrapes the Prometheus metrics from the Avalanche node based on the rules (e.g., regex).
+And publishes the data to AWS CloudWatch.
 
 Requires IAM instance role of: cloudwatch:PutMetricData.
 
