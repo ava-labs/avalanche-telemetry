@@ -23,7 +23,7 @@ async fn main() -> io::Result<()> {
 
         rules_file_path: matches
             .value_of("RULES_FILE_PATH")
-            .unwrap_or("/data/avalanche-telemetry-cloudwatch.rules.yaml")
+            .unwrap_or("/var/log/avalanche-telemetry-cloudwatch.rules.yaml")
             .to_string(),
         namespace: matches
             .value_of("NAMESPACE")

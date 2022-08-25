@@ -30,7 +30,7 @@ $ avalanche-telemetry-cloudwatch \
 --log-level=info \
 --initial-wait-seconds=10 \
 --fetch-interval-seconds=60 \
---rules-file-path=/data/avalanche-telemetry-cloudwatch.rules.yaml \
+--rules-file-path=/var/log/avalanche-telemetry-cloudwatch.rules.yaml \
 --rpc-endpoint=http://localhost:9650
 
 
@@ -74,7 +74,7 @@ $ avalanche-telemetry-cloudwatch \
                 .required(false)
                 .takes_value(true)
                 .allow_invalid_utf8(false)
-                .default_value("/data/avalanche-telemetry-cloudwatch.rules.yaml"),
+                .default_value("/var/log/avalanche-telemetry-cloudwatch.rules.yaml"),
         )
         .arg(
             Arg::new("NAMESPACE")
