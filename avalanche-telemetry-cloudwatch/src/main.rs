@@ -10,7 +10,7 @@ async fn main() -> io::Result<()> {
 
     let log_level = matches.value_of("LOG_LEVEL").unwrap_or("info").to_string();
 
-    let initial_wait_seconds = matches.value_of("INITIAL_WAIT_SECONDS").unwrap_or("10");
+    let initial_wait_seconds = matches.value_of("INITIAL_WAIT_SECONDS").unwrap_or("0");
     let initial_wait_seconds = initial_wait_seconds.parse::<u32>().unwrap();
 
     let fetch_interval_seconds = matches.value_of("FETCH_INTERVAL_SECONDS").unwrap_or("60");
@@ -23,7 +23,7 @@ async fn main() -> io::Result<()> {
 
         rules_file_path: matches
             .value_of("RULES_FILE_PATH")
-            .unwrap_or("/var/log/avalanche-telemetry-cloudwatch.rules.yaml")
+            .unwrap_or("/data/avalanche-telemetry-cloudwatch.rules.yaml")
             .to_string(),
         namespace: matches
             .value_of("NAMESPACE")

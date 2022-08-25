@@ -32,7 +32,7 @@ $ avalanche-telemetry-cloudwatch \
 --log-level=info \
 --initial-wait-seconds=10 \
 --fetch-interval-seconds=60 \
---rules-file-path=/var/log/avalanche-telemetry-cloudwatch.rules.yaml \
+--rules-file-path=/data/avalanche-telemetry-cloudwatch.rules.yaml \
 --rpc-endpoint=http://localhost:9650
 
 
@@ -76,7 +76,7 @@ $ avalanche-telemetry-cloudwatch \
                 .required(false)
                 .takes_value(true)
                 .allow_invalid_utf8(false)
-                .default_value("/var/log/avalanche-telemetry-cloudwatch.rules.yaml"),
+                .default_value("/data/avalanche-telemetry-cloudwatch.rules.yaml"),
         )
         .arg(
             Arg::new("NAMESPACE")
@@ -180,7 +180,7 @@ pub async fn execute(opts: Flags) -> io::Result<()> {
         };
 
         // reload everytime in case rules are updated
-        let metrics_rules = prometheus_manager::load_rules(&opts.rules_file_path)?;
+        let metrics_rules = prometheus_manager::Rules::load(&opts.rules_file_path)?;
 
         let cur_metrics = match prometheus_manager::match_all_by_rules(&s.metrics, metrics_rules) {
             Ok(v) => v,
