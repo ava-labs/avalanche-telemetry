@@ -20,9 +20,19 @@ async fn main() -> io::Result<()> {
         log_level,
         initial_wait_seconds,
         fetch_interval_seconds,
-        endpoint: matches
-            .value_of("ENDPOINT")
-            .unwrap_or("http://localhost:9650/ext/metrics")
+
+        rules_file_path: matches
+            .value_of("RULES_FILE_PATH")
+            .unwrap_or("/data/avalanche-telemetry-cloudwatch.rules.yaml")
+            .to_string(),
+        namespace: matches
+            .value_of("NAMESPACE")
+            .unwrap_or("avalanche-telemetry-cloudwatch")
+            .to_string(),
+
+        rpc_endpoint: matches
+            .value_of("RPC_ENDPOINT")
+            .unwrap_or("http://localhost:9650")
             .to_string(),
     };
     command::execute(opts).await
