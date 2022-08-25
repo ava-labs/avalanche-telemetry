@@ -33,6 +33,7 @@ $ avalanche-telemetry-cloudwatch \
 --initial-wait-seconds=10 \
 --fetch-interval-seconds=60 \
 --rules-file-path=/data/avalanche-telemetry-cloudwatch.rules.yaml \
+--namespace=mine \
 --rpc-endpoint=http://localhost:9650
 
 
