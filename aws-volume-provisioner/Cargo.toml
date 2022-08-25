@@ -1,0 +1,23 @@
+[package]
+name = "aws-volume-provisioner"
+version = "0.0.7"
+edition = "2021"
+rust-version = "1.63"
+readme = "README.md"
+license = "Apache-2.0"
+
+[[bin]]
+name = "aws-volume-provisioner"
+path = "src/main.rs"
+
+[dependencies]
+aws-manager = "0.0.15" # https://crates.io/crates/aws-manager/versions
+aws-sdk-ec2 = "0.17.0"
+clap = { version = "3.2.17", features = ["cargo", "derive"] }
+command-manager = "0.0.1"
+env_logger = "0.9.0"
+log = "0.4.17"
+path-clean = { version = "0.1.0", optional = false }
+random-manager = "0.0.1"
+tokio = { version = "1.20.1", features = ["full"] }
+walkdir = { version = "2.3.2", optional = false }
