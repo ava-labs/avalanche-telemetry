@@ -183,10 +183,10 @@ pub async fn execute(opts: Flags) -> io::Result<()> {
         // reload everytime in case rules are updated
         let metrics_rules = prometheus_manager::Rules::load(&opts.rules_file_path)?;
 
-        let cur_metrics = match prometheus_manager::match_all_by_rules(&s.metrics, metrics_rules) {
+        let cur_metrics = match prometheus_manager::apply_rules(&s.metrics, metrics_rules) {
             Ok(v) => v,
             Err(e) => {
-                log::warn!("failed match_all_by_rules {}, retrying...", e);
+                log::warn!("failed apply_rules {}, retrying...", e);
                 continue;
             }
         };
