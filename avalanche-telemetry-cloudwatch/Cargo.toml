@@ -15,9 +15,9 @@ aws-manager = "0.0.18" # https://crates.io/crates/aws-manager/versions
 aws-sdk-cloudwatch = "0.18.0"
 aws-sdk-ec2 = "0.18.0"
 chrono = "0.4.22"
-clap = { version = "3.2.21", features = ["cargo", "derive"] }
+clap = { version = "3.2.22", features = ["cargo", "derive"] }
 command-manager = "0.0.1"
-env_logger = "0.9.0"
+env_logger = "0.9.1"
 http-manager = "0.0.2"
 log = "0.4.17"
 prometheus-manager = "0.0.12"
