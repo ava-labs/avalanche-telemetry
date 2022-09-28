@@ -151,15 +151,24 @@ pub async fn execute(opts: Flags) -> io::Result<()> {
         log::info!("skipping initial sleep...");
     }
 
-    let fetch_interval = Duration::from_secs(opts.fetch_interval_seconds as u64);
+    let fetch_interval = if opts.fetch_interval_seconds >= 60 {
+        Duration::from_secs(opts.fetch_interval_seconds as u64)
+    } else {
+        log::info!(
+            "fetch interval seconds {} < minimum seconds 60 -- defaults to 300",
+            opts.fetch_interval_seconds
+        );
+        Duration::from_secs(300)
+    };
+    log::info!("fetch interval {:?}", fetch_interval);
 
     let shared_config = aws_manager::load_config(None).await?;
     let cw_manager = cloudwatch::Manager::new(&shared_config);
     loop {
         log::info!(
-            "fetching metrics in {:?} for {}",
+            "fetching metrics '{}' with interval {:?}",
+            opts.rpc_endpoint,
             fetch_interval,
-            opts.rpc_endpoint
         );
         sleep(fetch_interval).await;
 
