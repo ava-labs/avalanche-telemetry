@@ -1,6 +1,6 @@
 [package]
 name = "avalanche-telemetry-cloudwatch"
-version = "0.0.9"
+version = "0.0.10"
 edition = "2021"
 rust-version = "1.64"
 readme = "README.md"
