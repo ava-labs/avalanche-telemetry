@@ -9,12 +9,12 @@ use aws_sdk_cloudwatch::{
     types::DateTime as SmithyDateTime,
 };
 use chrono::Utc;
-use clap::{crate_version, Arg, Command};
+use clap::{crate_version, value_parser, Arg, Command};
 use tokio::time::{sleep, Duration};
 
 pub const NAME: &str = "avalanche-telemetry-cloudwatch";
 
-pub fn new() -> Command<'static> {
+pub fn new() -> Command {
     Command::new(NAME)
         .version(crate_version!())
         .about("Fetches the Avalanche node metrics and publishes to AWS CloudWatch")
@@ -46,10 +46,8 @@ $ avalanche-telemetry-cloudwatch \
                 .short('l')
                 .help("Sets the log level")
                 .required(false)
-                .takes_value(true)
-                .possible_value("debug")
-                .possible_value("info")
-                .allow_invalid_utf8(false)
+                .num_args(1)
+                .value_parser(["debug", "info"])
                 .default_value("info"),
         )
         .arg(
@@ -57,17 +55,17 @@ $ avalanche-telemetry-cloudwatch \
                 .long("initial-wait-seconds")
                 .help("Sets the initial wait duration in seconds")
                 .required(false)
-                .takes_value(true)
-                .allow_invalid_utf8(false)
-                .default_value("0"),
+                .num_args(1)
+                .value_parser(value_parser!(u32))
+                .default_value("5"),
         )
         .arg(
             Arg::new("FETCH_INTERVAL_SECONDS")
                 .long("fetch-interval-seconds")
                 .help("Sets the fetch interval duration in seconds")
                 .required(false)
-                .takes_value(true)
-                .allow_invalid_utf8(false)
+                .num_args(1)
+                .value_parser(value_parser!(u32))
                 .default_value("60"),
         )
         .arg(
@@ -75,8 +73,7 @@ $ avalanche-telemetry-cloudwatch \
                 .long("rules-file-path")
                 .help("Sets the file path for rules")
                 .required(false)
-                .takes_value(true)
-                .allow_invalid_utf8(false)
+                .num_args(1)
                 .default_value("/data/avalanche-telemetry-cloudwatch.rules.yaml"),
         )
         .arg(
@@ -84,8 +81,7 @@ $ avalanche-telemetry-cloudwatch \
                 .long("namespace")
                 .help("Sets the namespace")
                 .required(false)
-                .takes_value(true)
-                .allow_invalid_utf8(false)
+                .num_args(1)
                 .default_value("avalanche-telemetry-cloudwatch"),
         )
         .arg(
@@ -93,8 +89,7 @@ $ avalanche-telemetry-cloudwatch \
                 .long("rpc-endpoint")
                 .help("Sets the endpoint")
                 .required(false)
-                .takes_value(true)
-                .allow_invalid_utf8(false)
+                .num_args(1)
                 .default_value("http://localhost:9650"),
         )
 }
