@@ -161,7 +161,7 @@ pub async fn execute(opts: Flags) -> io::Result<()> {
     let cw_manager = cloudwatch::Manager::new(&shared_config);
     loop {
         log::info!(
-            "fetching metrics '{}' with interval {:?}",
+            "will fetch metrics at '{}' after {:?}",
             opts.rpc_endpoint,
             fetch_interval,
         );

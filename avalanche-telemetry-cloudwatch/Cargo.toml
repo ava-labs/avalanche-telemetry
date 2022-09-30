@@ -1,6 +1,6 @@
 [package]
 name = "avalanche-telemetry-cloudwatch"
-version = "0.0.12"
+version = "0.0.13"
 edition = "2021"
 rust-version = "1.64"
 description = "Avalanche telemetry agent"
@@ -22,6 +22,6 @@ command-manager = "0.0.1"
 env_logger = "0.9.1"
 http-manager = "0.0.3"
 log = "0.4.17"
-prometheus-manager = "0.0.14"
+prometheus-manager = "0.0.15"
 random-manager = "0.0.1"
 tokio = { version = "1.21.2", features = ["full"] }
