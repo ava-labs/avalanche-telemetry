@@ -107,6 +107,9 @@ pub struct Flags {
     pub rpc_endpoint: String,
 }
 
+/// 20-minute
+pub const DEFAULT_INTERVAL_SECONDS: u64 = 1200;
+
 pub async fn execute(opts: Flags) -> io::Result<()> {
     println!("{} version: {}", NAME, crate_version!());
 
@@ -150,10 +153,11 @@ pub async fn execute(opts: Flags) -> io::Result<()> {
         Duration::from_secs(opts.fetch_interval_seconds as u64)
     } else {
         log::info!(
-            "fetch interval seconds {} < minimum seconds 60 -- defaults to 300",
-            opts.fetch_interval_seconds
+            "fetch interval seconds {} < minimum seconds 60 -- defaults to {}",
+            opts.fetch_interval_seconds,
+            DEFAULT_INTERVAL_SECONDS
         );
-        Duration::from_secs(300)
+        Duration::from_secs(DEFAULT_INTERVAL_SECONDS)
     };
     log::info!("fetch interval {:?}", fetch_interval);
 
