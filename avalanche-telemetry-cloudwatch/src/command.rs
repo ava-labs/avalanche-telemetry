@@ -31,7 +31,7 @@ e.g.,
 $ avalanche-telemetry-cloudwatch \
 --log-level=info \
 --initial-wait-seconds=10 \
---fetch-interval-seconds=60 \
+--fetch-interval-seconds=300 \
 --rules-file-path=/data/avalanche-telemetry-cloudwatch.rules.yaml \
 --namespace=mine \
 --rpc-endpoint=http://localhost:9650
@@ -66,7 +66,7 @@ $ avalanche-telemetry-cloudwatch \
                 .required(false)
                 .num_args(1)
                 .value_parser(value_parser!(u32))
-                .default_value("60"),
+                .default_value("3600"), // 60-minute
         )
         .arg(
             Arg::new("RULES_FILE_PATH")
@@ -108,7 +108,7 @@ pub struct Flags {
 }
 
 /// 20-minute
-pub const DEFAULT_INTERVAL_SECONDS: u64 = 1200;
+pub const DEFAULT_INTERVAL_SECONDS: u64 = 3600;
 
 pub async fn execute(opts: Flags) -> io::Result<()> {
     println!("{} version: {}", NAME, crate_version!());
@@ -153,7 +153,7 @@ pub async fn execute(opts: Flags) -> io::Result<()> {
         Duration::from_secs(opts.fetch_interval_seconds as u64)
     } else {
         log::info!(
-            "fetch interval seconds {} < minimum seconds 60 -- defaults to {}",
+            "fetch interval seconds {} too small (< minimum 60 seconds) -- defaults to {} to prevent DDOS/CloudWatch bill blowups",
             opts.fetch_interval_seconds,
             DEFAULT_INTERVAL_SECONDS
         );
