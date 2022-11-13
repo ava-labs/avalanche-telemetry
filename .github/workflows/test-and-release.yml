@@ -19,6 +19,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+
       - name: Install Rust
         uses: actions-rs/toolchain@v1
         with:
@@ -26,11 +27,14 @@ jobs:
           profile: minimal
           components: rustfmt, clippy
           override: true
+
       - name: Check Rust version
         run: rustc --version
+
       - uses: Swatinem/rust-cache@v1
         with:
           cache-on-failure: true
+
       - name: Run static analysis tests
         shell: bash
         run: scripts/tests.lint.sh
@@ -41,6 +45,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+
       - name: Install Rust
         uses: actions-rs/toolchain@v1
         with:
@@ -48,11 +53,14 @@ jobs:
           profile: minimal
           components: rustfmt, clippy
           override: true
+
       - name: Check Rust version
         run: rustc --version
+
       - uses: Swatinem/rust-cache@v1
         with:
           cache-on-failure: true
+
       - name: Check unused Cargo dependencies
         shell: bash
         run: scripts/tests.unused.sh
@@ -63,17 +71,21 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+
       - name: Install Rust
         uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
           profile: minimal
           override: true
+
       - name: Check Rust version
         run: rustc --version
+
       - uses: Swatinem/rust-cache@v1
         with:
           cache-on-failure: true
+
       - name: Run unit tests
         run: scripts/tests.unit.sh
 
@@ -114,6 +126,7 @@ jobs:
           toolchain: stable
           target: ${{ matrix.job.target }}
           override: true
+
       - name: Check Rust version
         run: rustc --version
 
@@ -161,16 +174,16 @@ jobs:
 
             ./target/${TARGET}/release/avalanche-telemetry-cloudwatch --help
             cp ./target/${TARGET}/release/avalanche-telemetry-cloudwatch avalanche-telemetry-cloudwatch.${TARGET}
-            echo "::set-output name=file_name_avalanche_telemetry_cloudwatch::avalanche-telemetry-cloudwatch.${TARGET}"
+            echo "file_name_avalanche_telemetry_cloudwatch=avalanche-telemetry-cloudwatch.${TARGET}" >> $GITHUB_OUTPUT
             tar -czvf avalanche-telemetry-cloudwatch_${TARGET}.tar.gz -C ./target/${TARGET}/release avalanche-telemetry-cloudwatch
-            echo "::set-output name=file_name_avalanche_telemetry_cloudwatch_tar_gz::avalanche-telemetry-cloudwatch_${TARGET}.tar.gz"
+            echo "file_name_avalanche_telemetry_cloudwatch_tar_gz=avalanche-telemetry-cloudwatch_${TARGET}.tar.gz" >> $GITHUB_OUTPUT
 
           elif [ "$PLATFORM_NAME" == "darwin" ]; then
 
             cp ./target/${TARGET}/release/avalanche-telemetry-cloudwatch avalanche-telemetry-cloudwatch.${TARGET}
-            echo "::set-output name=file_name_avalanche_telemetry_cloudwatch::avalanche-telemetry-cloudwatch.${TARGET}"
+            echo "file_name_avalanche_telemetry_cloudwatch=avalanche-telemetry-cloudwatch.${TARGET}" >> $GITHUB_OUTPUT
             gtar -czvf avalanche-telemetry-cloudwatch_${TARGET}.tar.gz -C ./target/${TARGET}/release avalanche-telemetry-cloudwatch
-            echo "::set-output name=file_name_avalanche_telemetry_cloudwatch_tar_gz::avalanche-telemetry-cloudwatch_${TARGET}.tar.gz"
+            echo "file_name_avalanche_telemetry_cloudwatch_tar_gz=avalanche-telemetry-cloudwatch_${TARGET}.tar.gz" >> $GITHUB_OUTPUT
 
           else
 
