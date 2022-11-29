@@ -184,7 +184,6 @@ jobs:
         run: |
           if [ "$PLATFORM_NAME" == "linux" ]; then
 
-            ./target/${TARGET}/release/avalanche-telemetry-cloudwatch --help
             cp ./target/${TARGET}/release/avalanche-telemetry-cloudwatch avalanche-telemetry-cloudwatch.${TARGET}
             echo "file_name_avalanche_telemetry_cloudwatch=avalanche-telemetry-cloudwatch.${TARGET}" >> $GITHUB_OUTPUT
             tar -czvf avalanche-telemetry-cloudwatch_${TARGET}.tar.gz -C ./target/${TARGET}/release avalanche-telemetry-cloudwatch
