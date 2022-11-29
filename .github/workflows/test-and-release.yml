@@ -179,15 +179,15 @@ jobs:
 
             cp ./target/${TARGET}/release/avalanche-telemetry-cloudwatch avalanche-telemetry-cloudwatch.${TARGET}
             echo "file_name_avalanche_telemetry_cloudwatch=avalanche-telemetry-cloudwatch.${TARGET}" >> $GITHUB_OUTPUT
-            tar -czvf avalanche-telemetry-cloudwatch_${TARGET}.tar.gz -C ./target/${TARGET}/release avalanche-telemetry-cloudwatch
-            echo "file_name_avalanche_telemetry_cloudwatch_tar_gz=avalanche-telemetry-cloudwatch_${TARGET}.tar.gz" >> $GITHUB_OUTPUT
+            tar -czvf avalanche-telemetry-cloudwatch.${TARGET}.tar.gz -C ./target/${TARGET}/release avalanche-telemetry-cloudwatch
+            echo "file_name_avalanche_telemetry_cloudwatch_tar_gz=avalanche-telemetry-cloudwatch.${TARGET}.tar.gz" >> $GITHUB_OUTPUT
 
           elif [ "$PLATFORM_NAME" == "darwin" ]; then
 
             cp ./target/${TARGET}/release/avalanche-telemetry-cloudwatch avalanche-telemetry-cloudwatch.${TARGET}
             echo "file_name_avalanche_telemetry_cloudwatch=avalanche-telemetry-cloudwatch.${TARGET}" >> $GITHUB_OUTPUT
-            gtar -czvf avalanche-telemetry-cloudwatch_${TARGET}.tar.gz -C ./target/${TARGET}/release avalanche-telemetry-cloudwatch
-            echo "file_name_avalanche_telemetry_cloudwatch_tar_gz=avalanche-telemetry-cloudwatch_${TARGET}.tar.gz" >> $GITHUB_OUTPUT
+            gtar -czvf avalanche-telemetry-cloudwatch.${TARGET}.tar.gz -C ./target/${TARGET}/release avalanche-telemetry-cloudwatch
+            echo "file_name_avalanche_telemetry_cloudwatch_tar_gz=avalanche-telemetry-cloudwatch.${TARGET}.tar.gz" >> $GITHUB_OUTPUT
 
           else
 
