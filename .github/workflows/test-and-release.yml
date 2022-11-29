@@ -172,7 +172,7 @@ jobs:
         run: cargo install cross
 
       - name: Build
-        run: ${{ env.CARGO_CMD }} build --locked --release --target=${{ matrix.job.target }} --bin avalanche-telemetry-cloudwatch
+        run: ${{ env.CARGO_CMD }} build --release --target=${{ matrix.job.target }} --bin avalanche-telemetry-cloudwatch
 
       - name: Compress binaries
         id: release_artifacts
