@@ -22,6 +22,6 @@ command-manager = "0.0.1"
 env_logger = "0.10.0"
 http-manager = "0.0.4"
 log = "0.4.17"
-prometheus-manager = "0.0.18"
+prometheus-manager = "0.0.19"
 random-manager = "0.0.1"
 tokio = { version = "1.22.0", features = ["full"] }
