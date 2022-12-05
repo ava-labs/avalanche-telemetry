@@ -1,6 +1,6 @@
 [package]
 name = "avalanche-telemetry-cloudwatch"
-version = "0.0.21" # https://github.com/ava-labs/avalanche-telemetry/releases
+version = "0.0.22" # https://github.com/ava-labs/avalanche-telemetry/releases
 edition = "2021"
 rust-version = "1.65"
 description = "Avalanche telemetry agent"
@@ -13,14 +13,14 @@ name = "avalanche-telemetry-cloudwatch"
 path = "src/main.rs"
 
 [dependencies]
-aws-manager = "0.21.7" # https://crates.io/crates/aws-manager/versions
+aws-manager = "0.21.10" # https://crates.io/crates/aws-manager/versions
 aws-sdk-cloudwatch = "0.21.0"
 aws-sdk-ec2 = "0.21.0"
 chrono = "0.4.23"
-clap = { version = "4.0.28", features = ["cargo", "derive"] } # https://github.com/clap-rs/clap/releases
+clap = { version = "4.0.29", features = ["cargo", "derive"] } # https://github.com/clap-rs/clap/releases
 command-manager = "0.0.1"
 env_logger = "0.10.0"
-http-manager = "0.0.4"
+http-manager = "0.0.5"
 log = "0.4.17"
 prometheus-manager = "0.0.19"
 random-manager = "0.0.1"
