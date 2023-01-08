@@ -20,7 +20,7 @@ async fn main() -> io::Result<()> {
 
     let fetch_interval_seconds = matches
         .get_one::<u32>("FETCH_INTERVAL_SECONDS")
-        .unwrap_or(&60)
+        .unwrap_or(&3600)
         .clone();
 
     let opts = command::Flags {
