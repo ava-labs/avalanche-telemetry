@@ -1,4 +1,5 @@
 [workspace]
 members = [
-    "avalanche-telemetry-cloudwatch"
+    "avalanche-telemetry-cloudwatch",
+    "avalanche-telemetry-cloudwatch-installer"
 ]
