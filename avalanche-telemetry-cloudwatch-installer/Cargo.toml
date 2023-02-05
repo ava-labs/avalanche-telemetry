@@ -1,6 +1,6 @@
 [package]
 name = "avalanche-telemetry-cloudwatch-installer"
-version = "0.0.49" # https://github.com/ava-labs/avalanche-telemetry/releases
+version = "0.0.50" # https://github.com/ava-labs/avalanche-telemetry/releases
 edition = "2021"
 rust-version = "1.67"
 publish = true
@@ -17,7 +17,7 @@ log = "0.4.17"
 random-manager = "0.0.2"
 serde = { version = "1.0.152", features = ["derive"] }
 serde_json = "1.0.91" # https://github.com/serde-rs/json
-tokio = "1.24.2" # https://github.com/tokio-rs/tokio/releases
+tokio = "1.25.0" # https://github.com/tokio-rs/tokio/releases
 
 [dev-dependencies]
 env_logger = "0.10.0"
