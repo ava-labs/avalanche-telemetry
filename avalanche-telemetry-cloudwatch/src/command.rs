@@ -10,6 +10,7 @@ use aws_sdk_cloudwatch::{
 };
 use chrono::Utc;
 use clap::{crate_version, value_parser, Arg, Command};
+use reqwest::ClientBuilder;
 use tokio::time::{sleep, Duration};
 
 pub const NAME: &str = "avalanche-telemetry-cloudwatch";
@@ -175,14 +176,34 @@ pub async fn execute(opts: Flags) -> io::Result<()> {
         let ts = SmithyDateTime::from_nanos(ts.timestamp_nanos() as i128)
             .expect("failed to convert DateTime<Utc>");
 
-        let rb = match http_manager::get_non_tls(opts.rpc_endpoint.as_str(), "ext/metrics").await {
-            Ok(v) => v,
-            Err(e) => {
-                log::warn!("failed get_non_tls {}, retrying...", e);
-                continue;
-            }
-        };
-        let s = match prometheus_manager::Scrape::from_bytes(&rb) {
+        let req_cli_builder = ClientBuilder::new()
+            .user_agent(env!("CARGO_PKG_NAME"))
+            .danger_accept_invalid_certs(true)
+            .timeout(Duration::from_secs(15))
+            .connection_verbose(true)
+            .build()
+            .map_err(|e| {
+                Error::new(
+                    ErrorKind::Other,
+                    format!("failed ClientBuilder build {}", e),
+                )
+            })?;
+        let resp = req_cli_builder
+            .get(format!("{}/ext/metrics", opts.rpc_endpoint).as_str())
+            .send()
+            .await
+            .map_err(|e| {
+                Error::new(ErrorKind::Other, format!("failed ClientBuilder send {}", e))
+            })?;
+        let out = resp.bytes().await.map_err(|e| {
+            Error::new(
+                ErrorKind::Other,
+                format!("failed ClientBuilder bytes {}", e),
+            )
+        })?;
+        let out: Vec<u8> = out.into();
+
+        let s = match prometheus_manager::Scrape::from_bytes(&out) {
             Ok(v) => v,
             Err(e) => {
                 log::warn!("failed scrape {}, retrying...", e);
