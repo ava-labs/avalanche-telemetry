@@ -28,7 +28,7 @@ pub const DEFAULT_TAG_NAME: &str = "latest";
 /// Leave "arch" and "os" empty to auto-detect from its local system.
 /// "arch" must be either "amd64" or "arm64".
 /// "os" must be either "macos", "linux", or "win".
-/// ref. https://github.com/ava-labs/avalanche-telemetry/releases
+/// ref. <https://github.com/ava-labs/avalanche-telemetry/releases>
 pub async fn download(
     arch: Option<Arch>,
     os: Option<Os>,
@@ -52,7 +52,7 @@ pub async fn download(
                         e,
                         round + 1
                     );
-                    sleep(Duration::from_secs((round + 1) * 5)).await;
+                    sleep(Duration::from_secs((round + 1) * 3)).await;
                     continue;
                 }
             };
@@ -63,7 +63,7 @@ pub async fn download(
             }
 
             log::warn!("release_info.tag_name is None -- retrying {}...", round + 1);
-            sleep(Duration::from_secs((round + 1) * 5)).await;
+            sleep(Duration::from_secs((round + 1) * 3)).await;
         }
 
         if release_info.tag_name.is_none() {
@@ -83,7 +83,7 @@ pub async fn download(
         }
     };
 
-    // ref. https://github.com/ava-labs/avalanche-telemetry/releases
+    // ref. <https://github.com/ava-labs/avalanche-telemetry/releases>
     log::info!(
         "detecting arch and platform for the release version tag {}",
         tag_name
@@ -101,8 +101,8 @@ pub async fn download(
         }
     };
 
-    // TODO: handle Apple arm64 when the official binary is available
-    // ref. https://github.com/ava-labs/avalanche-telemetry/releases
+    // ref. <https://github.com/ava-labs/avalanche-telemetry/releases>
+    // e.g., "avalanche-telemetry-cloudwatch.aarch64-ubuntu20.04-linux-gnu"
     let file_name = {
         if os.is_none() {
             if cfg!(target_os = "macos") {
@@ -117,6 +117,9 @@ pub async fn download(
             match os {
                 Os::MacOs => format!("avalanche-telemetry-cloudwatch.{arch}-apple-darwin"),
                 Os::Linux => format!("avalanche-telemetry-cloudwatch.{arch}-unknown-linux-gnu"),
+                Os::Ubuntu20 => {
+                    format!("avalanche-telemetry-cloudwatch.{arch}-ubuntu20.04-linux-gnu")
+                }
             }
         }
     };
@@ -146,7 +149,7 @@ pub async fn download(
     Ok(())
 }
 
-/// ref. https://github.com/ava-labs/avalanche-telemetry/releases
+/// ref. <https://github.com/ava-labs/avalanche-telemetry/releases>
 /// ref. https://api.github.com/repos/ava-labs/avalanche-telemetry/releases/latest
 pub async fn fetch_latest_release(org: &str, repo: &str) -> io::Result<ReleaseResponse> {
     let ep = format!(
@@ -263,6 +266,7 @@ impl Arch {
 pub enum Os {
     MacOs,
     Linux,
+    Ubuntu20,
 }
 
 /// ref. https://doc.rust-lang.org/std/string/trait.ToString.html
@@ -273,6 +277,7 @@ impl fmt::Display for Os {
         match self {
             Os::MacOs => write!(f, "macos"),
             Os::Linux => write!(f, "linux"),
+            Os::Ubuntu20 => write!(f, "ubuntu20.04"),
         }
     }
 }
@@ -282,6 +287,7 @@ impl Os {
         match os {
             "macos" => Ok(Os::MacOs),
             "linux" => Ok(Os::Linux),
+            "ubuntu20.04" => Ok(Os::Ubuntu20),
             _ => Err(Error::new(
                 ErrorKind::InvalidInput,
                 format!("unknown os {}", os),
