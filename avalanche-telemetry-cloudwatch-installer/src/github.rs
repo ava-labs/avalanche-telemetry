@@ -103,23 +103,38 @@ pub async fn download(
 
     // ref. <https://github.com/ava-labs/avalanche-telemetry/releases>
     // e.g., "avalanche-telemetry-cloudwatch.aarch64-ubuntu20.04-linux-gnu"
-    let file_name = {
+    let (file_name, fallback_file) = {
         if os.is_none() {
             if cfg!(target_os = "macos") {
-                format!("avalanche-telemetry-cloudwatch.{arch}-apple-darwin")
+                (
+                    format!("avalanche-telemetry-cloudwatch.{arch}-apple-darwin"),
+                    None,
+                )
             } else if cfg!(unix) {
-                format!("avalanche-telemetry-cloudwatch.{arch}-unknown-linux-gnu")
+                (
+                    format!("avalanche-telemetry-cloudwatch.{arch}-unknown-linux-gnu"),
+                    None,
+                )
             } else {
-                String::new()
+                (String::new(), None)
             }
         } else {
             let os = os.unwrap();
             match os {
-                Os::MacOs => format!("avalanche-telemetry-cloudwatch.{arch}-apple-darwin"),
-                Os::Linux => format!("avalanche-telemetry-cloudwatch.{arch}-unknown-linux-gnu"),
-                Os::Ubuntu20 => {
-                    format!("avalanche-telemetry-cloudwatch.{arch}-ubuntu20.04-linux-gnu")
-                }
+                Os::MacOs => (
+                    format!("avalanche-telemetry-cloudwatch.{arch}-apple-darwin"),
+                    None,
+                ),
+                Os::Linux => (
+                    format!("avalanche-telemetry-cloudwatch.{arch}-unknown-linux-gnu"),
+                    None,
+                ),
+                Os::Ubuntu20 => (
+                    format!("avalanche-telemetry-cloudwatch.{arch}-ubuntu20.04-linux-gnu"),
+                    Some(format!(
+                        "avalanche-telemetry-cloudwatch.{arch}-unknown-linux-gnu"
+                    )),
+                ),
             }
         }
     };
@@ -132,11 +147,24 @@ pub async fn download(
 
     log::info!("downloading latest '{}'", file_name);
     let download_url = format!(
-        "https://github.com/ava-labs/avalanche-telemetry/releases/download/{}/{}",
-        tag_name, file_name
+        "https://github.com/ava-labs/avalanche-telemetry/releases/download/{tag_name}/{file_name}"
     );
     let tmp_file_path = random_manager::tmp_path(10, None)?;
-    download_file(&download_url, &tmp_file_path).await?;
+    match download_file(&download_url, &tmp_file_path).await {
+        Ok(_) => {}
+        Err(e) => {
+            log::warn!("failed to download {:?}", e);
+            if let Some(fallback) = fallback_file {
+                let download_url = format!(
+                    "https://github.com/ava-labs/avalanche-telemetry/releases/download/{tag_name}/{fallback}",
+                );
+                log::warn!("falling back to {download_url}");
+                download_file(&download_url, &tmp_file_path).await?;
+            } else {
+                return Err(e);
+            }
+        }
+    }
 
     {
         let f = File::open(&tmp_file_path)?;
