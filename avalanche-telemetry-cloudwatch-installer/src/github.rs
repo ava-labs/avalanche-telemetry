@@ -129,7 +129,7 @@ pub async fn download(
                     format!("avalanche-telemetry-cloudwatch.{arch}-unknown-linux-gnu"),
                     None,
                 ),
-                Os::Ubuntu20 => (
+                Os::Ubuntu2004 => (
                     format!("avalanche-telemetry-cloudwatch.{arch}-ubuntu20.04-linux-gnu"),
                     Some(format!(
                         "avalanche-telemetry-cloudwatch.{arch}-unknown-linux-gnu"
@@ -294,7 +294,7 @@ impl Arch {
 pub enum Os {
     MacOs,
     Linux,
-    Ubuntu20,
+    Ubuntu2004,
 }
 
 /// ref. https://doc.rust-lang.org/std/string/trait.ToString.html
@@ -305,7 +305,7 @@ impl fmt::Display for Os {
         match self {
             Os::MacOs => write!(f, "macos"),
             Os::Linux => write!(f, "linux"),
-            Os::Ubuntu20 => write!(f, "ubuntu20.04"),
+            Os::Ubuntu2004 => write!(f, "ubuntu20.04"),
         }
     }
 }
@@ -315,7 +315,7 @@ impl Os {
         match os {
             "macos" => Ok(Os::MacOs),
             "linux" => Ok(Os::Linux),
-            "ubuntu20.04" => Ok(Os::Ubuntu20),
+            "ubuntu20.04" => Ok(Os::Ubuntu2004),
             _ => Err(Error::new(
                 ErrorKind::InvalidInput,
                 format!("unknown os {}", os),
