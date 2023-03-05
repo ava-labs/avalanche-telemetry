@@ -232,7 +232,7 @@ pub async fn execute(opts: Flags) -> io::Result<()> {
                     .build(),
             )
         }
-        match cloudwatch::spawn_put_metric_data(cw_manager.clone(), &opts.namespace, data).await {
+        match cw_manager.put_metric_data(&opts.namespace, data).await {
             Ok(_) => {}
             Err(e) => {
                 log::warn!("failed to put metric data {}, retrying...", e);
