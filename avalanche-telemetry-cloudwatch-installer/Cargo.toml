@@ -1,6 +1,6 @@
 [package]
 name = "avalanche-telemetry-cloudwatch-installer"
-version = "0.0.70" # https://github.com/ava-labs/avalanche-telemetry/releases
+version = "0.0.71" # https://github.com/ava-labs/avalanche-telemetry/releases
 edition = "2021"
 rust-version = "1.68"
 publish = true
@@ -10,12 +10,12 @@ readme = "README.md"
 license = "Apache-2.0"
 
 [dependencies]
-aws-manager = { version = "0.24.27", features = ["s3"] } # https://crates.io/crates/aws-manager
+aws-manager = { version = "0.24.28", features = ["s3"] } # https://crates.io/crates/aws-manager
 compress-manager = "0.0.6"
 log = "0.4.17"
 random-manager = "0.0.5"
-reqwest = "0.11.14"
-serde = { version = "1.0.156", features = ["derive"] }
+reqwest = "0.11.15"
+serde = { version = "1.0.158", features = ["derive"] }
 serde_json = "1.0.94" # https://github.com/serde-rs/json
 tokio = "1.26.0" # https://github.com/tokio-rs/tokio/releases
 
