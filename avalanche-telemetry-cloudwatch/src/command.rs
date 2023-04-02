@@ -5,8 +5,8 @@ use std::{
 
 use aws_manager::{self, cloudwatch, ec2};
 use aws_sdk_cloudwatch::{
-    model::{MetricDatum, StandardUnit},
-    types::DateTime as SmithyDateTime,
+    primitives::DateTime as SmithyDateTime,
+    types::{MetricDatum, StandardUnit},
 };
 use chrono::Utc;
 use clap::{crate_version, value_parser, Arg, Command};
