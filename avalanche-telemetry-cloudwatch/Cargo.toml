@@ -1,6 +1,6 @@
 [package]
 name = "avalanche-telemetry-cloudwatch"
-version = "0.0.76" # https://github.com/ava-labs/avalanche-telemetry/releases
+version = "0.0.77" # https://github.com/ava-labs/avalanche-telemetry/releases
 edition = "2021"
 rust-version = "1.68"
 description = "Avalanche telemetry agent"
@@ -19,6 +19,6 @@ chrono = "0.4.24"
 clap = { version = "4.2.1", features = ["cargo", "derive"] } # https://github.com/clap-rs/clap/releases
 env_logger = "0.10.0"
 log = "0.4.17"
-prometheus-manager = "0.0.25"
+prometheus-manager = "0.0.26"
 reqwest = "0.11.16"
 tokio = { version = "1.27.0", features = ["full"] }
