@@ -37,7 +37,7 @@ pub async fn download(
             }
 
             let err = res.err().unwrap();
-            if err.is_retryable() {
+            if err.retryable() {
                 log::warn!("get_object retriable error: {}", err);
                 sleep(Duration::from_secs((round + 1) * 5)).await;
                 continue;
