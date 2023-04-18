@@ -1,8 +1,6 @@
-use std::{fs, io};
+use std::io;
 
-use avalanche_telemetry_cloudwatch_installer::{github, s3 as s3_installer};
-use aws_manager::{self, s3};
-use tokio::time::{sleep, Duration};
+use avalanche_telemetry_cloudwatch_installer::github;
 
 /// cargo run --example download
 #[tokio::main]
@@ -17,46 +15,6 @@ async fn main() -> io::Result<()> {
         .await
         .unwrap();
     log::info!("downloaded {bin_path}");
-
-    let shared_config = aws_manager::load_config(
-        Some(String::from("us-east-1")),
-        Some(Duration::from_secs(30)),
-    )
-    .await;
-    let s3_manager = s3::Manager::new(&shared_config);
-    let s3_bucket = format!(
-        "installer-{}",
-        random_manager::secure_string(10).to_lowercase()
-    );
-
-    s3_manager.create_bucket(&s3_bucket).await.unwrap();
-
-    sleep(Duration::from_secs(2)).await;
-    let s3_installer_key = "sub-dir/test-bin".to_string();
-    s3_manager
-        .put_object(&bin_path, &s3_bucket, &s3_installer_key)
-        .await
-        .unwrap();
-
-    sleep(Duration::from_secs(5)).await;
-    let target_bin_path = random_manager::tmp_path(15, None)?;
-    s3_installer::download(
-        true,
-        &s3_manager,
-        &s3_bucket,
-        &s3_installer_key,
-        &target_bin_path,
-    )
-    .await
-    .unwrap();
-
-    log::info!("removing {target_bin_path}");
-    fs::remove_file(&target_bin_path)?;
-
-    s3_manager.delete_objects(&s3_bucket, None).await.unwrap();
-
-    sleep(Duration::from_secs(2)).await;
-    s3_manager.delete_bucket(&s3_bucket).await.unwrap();
 
     Ok(())
 }
