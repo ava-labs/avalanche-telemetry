@@ -16,7 +16,7 @@ path = "src/main.rs"
 aws-manager = { version = "0.26.9", features = ["cloudwatch", "ec2"] } # https://crates.io/crates/aws-manager
 aws-sdk-cloudwatch = "0.26.0"
 chrono = "0.4.24"
-clap = { version = "4.2.2", features = ["cargo", "derive"] } # https://github.com/clap-rs/clap/releases
+clap = { version = "4.2.4", features = ["cargo", "derive"] } # https://github.com/clap-rs/clap/releases
 env_logger = "0.10.0"
 log = "0.4.17"
 prometheus-manager = "0.0.26"
