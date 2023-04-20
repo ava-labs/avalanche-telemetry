@@ -19,6 +19,6 @@ chrono = "0.4.24"
 clap = { version = "4.2.4", features = ["cargo", "derive"] } # https://github.com/clap-rs/clap/releases
 env_logger = "0.10.0"
 log = "0.4.17"
-prometheus-manager = "0.0.26"
+prometheus-manager = "0.0.27"
 reqwest = "0.11.16"
 tokio = { version = "1.27.0", features = ["full"] }
