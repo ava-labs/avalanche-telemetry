@@ -1,6 +1,6 @@
 [package]
 name = "avalanche-telemetry-cloudwatch-installer"
-version = "0.0.87" # https://github.com/ava-labs/avalanche-telemetry/releases
+version = "0.0.88" # https://github.com/ava-labs/avalanche-telemetry/releases
 edition = "2021"
 rust-version = "1.68"
 publish = true
