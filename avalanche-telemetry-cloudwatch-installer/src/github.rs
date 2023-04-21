@@ -145,10 +145,10 @@ pub async fn download(
         ));
     }
 
-    log::info!("downloading latest '{}'", file_name);
     let download_url = format!(
         "https://github.com/ava-labs/avalanche-telemetry/releases/download/{tag_name}/{file_name}"
     );
+    log::info!("downloading {download_url}");
     let tmp_file_path = random_manager::tmp_path(10, None)?;
     match download_file(&download_url, &tmp_file_path).await {
         Ok(_) => {}
