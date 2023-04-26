@@ -52,6 +52,14 @@ $ avalanche-telemetry-cloudwatch \
                 .default_value("info"),
         )
         .arg(
+            Arg::new("REGION")
+                .long("region")
+                .help("Sets the AWS region")
+                .required(true)
+                .num_args(1)
+                .default_value("us-west-2"),
+        )
+        .arg(
             Arg::new("INITIAL_WAIT_SECONDS")
                 .long("initial-wait-seconds")
                 .help("Sets the initial wait duration in seconds")
@@ -98,6 +106,7 @@ $ avalanche-telemetry-cloudwatch \
 /// Defines flag options.
 pub struct Flags {
     pub log_level: String,
+    pub region: String,
 
     pub initial_wait_seconds: u32,
     pub fetch_interval_seconds: u32,
@@ -162,7 +171,8 @@ pub async fn execute(opts: Flags) -> io::Result<()> {
     };
     log::info!("fetch interval {:?}", fetch_interval);
 
-    let shared_config = aws_manager::load_config(None, Some(Duration::from_secs(30))).await;
+    let shared_config =
+        aws_manager::load_config(Some(opts.region.clone()), Some(Duration::from_secs(30))).await;
     let cw_manager = cloudwatch::Manager::new(&shared_config);
     loop {
         log::info!(

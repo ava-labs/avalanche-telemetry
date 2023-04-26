@@ -25,6 +25,8 @@ async fn main() -> io::Result<()> {
 
     let opts = command::Flags {
         log_level,
+        region: matches.get_one::<String>("REGION").unwrap().clone(),
+
         initial_wait_seconds,
         fetch_interval_seconds,
 
