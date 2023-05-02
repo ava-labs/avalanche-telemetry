@@ -14,7 +14,7 @@ path = "src/main.rs"
 
 [dependencies]
 aws-manager = { version = "0.26.21", features = ["cloudwatch", "ec2"] } # https://crates.io/crates/aws-manager
-aws-sdk-cloudwatch = "0.26.0"
+aws-sdk-cloudwatch = "0.27.0"
 chrono = "0.4.24"
 clap = { version = "4.2.5", features = ["cargo", "derive"] } # https://github.com/clap-rs/clap/releases
 env_logger = "0.10.0"
