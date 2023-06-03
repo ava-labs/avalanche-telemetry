@@ -13,7 +13,7 @@ name = "avalanche-telemetry-cloudwatch"
 path = "src/main.rs"
 
 [dependencies]
-aws-manager = { version = "0.28.11", features = ["cloudwatch", "ec2"] } # https://crates.io/crates/aws-manager
+aws-manager = { version = "0.28.13", features = ["cloudwatch", "ec2"] } # https://crates.io/crates/aws-manager
 aws-sdk-cloudwatch = "0.28.0"
 chrono = "0.4.26"
 clap = { version = "4.3.0", features = ["cargo", "derive"] } # https://github.com/clap-rs/clap/releases
