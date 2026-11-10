@@ -171,8 +171,12 @@ pub async fn execute(opts: Flags) -> io::Result<()> {
     };
     log::info!("fetch interval {:?}", fetch_interval);
 
-    let shared_config =
-        aws_manager::load_config(Some(opts.region.clone()), Some(Duration::from_secs(30))).await;
+    let shared_config = aws_manager::load_config(
+        Some(opts.region.clone()),
+        None,
+        Some(Duration::from_secs(30)),
+    )
+    .await;
     let cw_manager = cloudwatch::Manager::new(&shared_config);
     loop {
         log::info!(
